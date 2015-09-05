@@ -80,7 +80,7 @@ while true; do
 		blue=${rgb[2]}
 	fi
 
-	hsetroot -add \#$(printf "%02X%02X%02X" $red $green $blue) -add \#$(printf "%02X%02X%02X" $blue $red $green) -add \#$(printf "%02X%02X%02X" $green $blue $red)  -gradient $(shuf -z -n1 -i20-40) -contrast 1.5 -blur 10 -full "$IMAGE" -contrast 1.15 -gamma 0.875
+	hsetroot -add \#$(printf "%02X%02X%02X" $red $green $blue) -add \#$(printf "%02X%02X%02X" $blue $red $green) -add \#$(printf "%02X%02X%02X" $green $blue $red)  -gradient $(shuf -z -n1 -i20-40) -contrast 1.8 -blur 10 -full "$IMAGE"
 
 	echo "$red $green $blue" > "$CURRENTCOLORFILE"
 
