@@ -1,5 +1,11 @@
 REQUIRES 'hsetroot' TO FUNCTION.
 
+CONFIGURATION:
+  Open colorloop.sh and change the file paths in the configuration
+    section to be accurate. Set the change rate if you want,
+    although anything under 30 starts to become a noticable 
+    distraction to workflow.
+
 USAGE: ./colorloop.sh &
   THEN FORGET ABOUT IT.
   It can function as a pretend daemon, open it as depicted above, then run it with any
