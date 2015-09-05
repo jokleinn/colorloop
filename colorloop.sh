@@ -81,13 +81,18 @@ then
 	exit
 fi
 
-#display(red, green, blue)
+#display(red, green, blue, gradient=null)
 function display()
 {
 	red=$1
 	green=$2
 	blue=$3
-	hsetroot -add \#$(printf "%02X%02X%02X" $red $green $blue) -add \#$(printf "%02X%02X%02X" $blue $red $green) -add \#$(printf "%02X%02X%02X" $green $blue $red)  -gradient $(shuf -z -n1 -i20-40) -contrast 1.8 -blur 10 -full "$IMAGE"
+	gradient=$4
+	if [ "$gradient" = "" ] 
+	then
+		gradient=$(shuf -z -n1 -i20-40)
+	fi
+	hsetroot -add \#$(printf "%02X%02X%02X" $red $green $blue) -add \#$(printf "%02X%02X%02X" $blue $red $green) -add \#$(printf "%02X%02X%02X" $green $blue $red)  -gradient $gradient -full "$IMAGE"
 }
 
 #fade(oldr, oldg, oldb, red, green, blue, frames)
@@ -120,6 +125,8 @@ function fade()
 	let "incb = $diffb / $frames"
 	let "incb *= -1"
 
+	gradient=$(shuf -z -n1 -i20-40)
+
 	for i in $(seq 1 $frames)
 	do
 		let "addr = $incr * $i"
@@ -127,9 +134,9 @@ function fade()
 		let "addb = $incb * $i"
 		if [ $i -eq $frames ]
 		then
-			display $red $green $blue
+			display $red $green $blue $gradient
 		else
-			display $(($oldr + $addr)) $(($oldg + $addg)) $(($oldb + $addb))
+			display $(($oldr + $addr)) $(($oldg + $addg)) $(($oldb + $addb)) $gradient
 		fi
 	done
 }
