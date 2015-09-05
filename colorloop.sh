@@ -168,9 +168,11 @@ while true; do
 	if [ -e "$FADETIMEFILE" ]
 	then
 		frames=$(cat "$FADETIMEFILE")
-		if [ $frames -gt 0 ]
+		if [ $frames -ne 1 ]
 		then
 			fade ${rgb[0]} ${rgb[1]} ${rgb[2]} $red $green $blue $frames
+		else
+			display $red $green $blue
 		fi
 	else
 		display $red $green $blue
