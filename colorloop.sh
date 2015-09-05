@@ -24,7 +24,7 @@ CHANGERATEFILE=~/projects/colorloop/.change_rate
 # END CONFIGURABLE VARIABLES #
 ##############################
 
-VERSION=1.3
+VERSION=1.4
 
 function help()
 {
