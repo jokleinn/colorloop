@@ -14,17 +14,20 @@ MAX=192
 #Background image to load. Must have transparency for color to seep through.
 IMAGE=~/projects/colorloop/boxes.png
 
+#"Configuration" directory. This will have a small handful of dot files thrown into it.
+CONFDIR=~/projects/colorloop
+
 #Internal file names, this is mostly useful if you want to put temporary files elsewhere.
-LOCKCOLORFILE=~/projects/colorloop/.lock_color
-CURRENTCOLORFILE=~/projects/colorloop/.current_color
-FADETIMEFILE=~/projects/colorloop/.fade_time
-CHANGERATEFILE=~/projects/colorloop/.change_rate
+LOCKCOLORFILE=.lock_color
+CURRENTCOLORFILE=.current_color
+FADETIMEFILE=.fade_time
+CHANGERATEFILE=.change_rate
 
 ##############################
 # END CONFIGURABLE VARIABLES #
 ##############################
 
-VERSION=1.5
+VERSION=1.6
 
 function help()
 {
@@ -52,7 +55,7 @@ then
 			c)
 				if [ $OPTARG -gt -1 ]
 				then
-					echo "$OPTARG" > "$CHANGERATEFILE"
+					echo "$OPTARG" > "$CONFDIR/$CHANGERATEFILE"
 				else
 					echo "Insane changerate value: $OPTARG"	>&2
 				fi
@@ -63,7 +66,7 @@ then
 				then
 					if [ $OPTARG -lt $(($maxframes+1)) ]
 					then
-						echo "$OPTARG" > "$FADETIMEFILE"
+						echo "$OPTARG" > "$CONFDIR/$FADETIMEFILE"
 					else
 						echo "Insane fade time frames: $OPTARG -- consider a value between 1 and $maxframes" >&2
 				fi
@@ -76,20 +79,20 @@ then
 				exit
 				;;
 			l)
-				touch "$LOCKCOLORFILE"
+				touch "$CONFDIR/$LOCKCOLORFILE"
 				;;
 			s)
 				color=$OPTARG
 				IFS=' ' read -a rgb <<< "$color"
 				if [ ${rgb[0]} -gt -1 ] && [ ${rgb[0]} -lt 256 ] && [ ${rgb[1]} -gt -1 ] && [ ${rgb[1]} -lt 256 ] && [ ${rgb[2]} -gt -1 ] && [ ${rgb[2]} -lt 256 ]
 				then
-					echo "$OPTARG" > "$CURRENTCOLORFILE"
+					echo "$OPTARG" > "$CONFDIR/$CURRENTCOLORFILE"
 				else
 					echo "Insane color value: $OPTARG" >&2
 				fi
 				;;
 			u)
-				rm -f "$LOCKCOLORFILE"
+				rm -f "$CONFDIR/$LOCKCOLORFILE"
 				;;
 			\?)
 				echo "Invalid option: -$OPTARG" >&2
@@ -172,25 +175,25 @@ while true; do
 	green=$(shuf -z -n1 -i$colormin$dash$colormax)
 	blue=$(shuf -z -n1 -i$colormin$dash$colormax)
 
-	if [ -e "$CURRENTCOLORFILE" ]
+	if [ -e "$CONFDIR/$CURRENTCOLORFILE" ]
 	then
-		color=$(cat "$CURRENTCOLORFILE")
+		color=$(cat "$CONFDIR/$CURRENTCOLORFILE")
 		IFS=' ' read -a rgb <<< "$color"
 	else
-		echo "$red $green $blue" > "$CURRENTCOLORFILE"
+		echo "$red $green $blue" > "$CONFDIR/$CURRENTCOLORFILE"
 		continue
 	fi
 
-	if [ -e "$LOCKCOLORFILE" ]
+	if [ -e "$CONFDIR/$LOCKCOLORFILE" ]
 	then	
 		red=${rgb[0]}
 		green=${rgb[1]}
 		blue=${rgb[2]}
 	fi
 
-	if [ -e "$FADETIMEFILE" ]
+	if [ -e "$CONFDIR/$FADETIMEFILE" ]
 	then
-		frames=$(cat "$FADETIMEFILE")
+		frames=$(cat "$CONFDIR/$FADETIMEFILE")
 		if [ $frames -ne 1 ]
 		then
 			fade ${rgb[0]} ${rgb[1]} ${rgb[2]} $red $green $blue $frames
@@ -201,13 +204,13 @@ while true; do
 		display $red $green $blue
 	fi
 
-	echo "$red $green $blue" > "$CURRENTCOLORFILE"
+	echo "$red $green $blue" > "$CONFDIR/$CURRENTCOLORFILE"
 
 
 	sleeptime=$CHANGERATE
-	if [ -e "$CHANGERATEFILE" ]
+	if [ -e "$CONFDIR/$CHANGERATEFILE" ]
 	then
-		filechangerate=$(cat "$CHANGERATEFILE")	
+		filechangerate=$(cat "$CONFDIR/$CHANGERATEFILE")	
 		if [ $filechangerate -gt -1 ]
 		then
 			sleeptime=$filechangerate
