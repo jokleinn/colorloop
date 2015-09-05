@@ -28,7 +28,8 @@ function help {
 	echo "  -l			Lock the master color."
 	echo " 				  Locking the master color will cause all"
 	echo " 				  output to be deviations of it."
-	echo "  -s\"int int int\"	Set the master color to the given 256-color integral array."
+	echo "  -s\"int int int\"	Set the master color to the given 256-color integral rgb array."
+	echo "  			  Example: -s\"32 64 192\""
 	echo "  -u			Unlock the master color."
 }
 
