@@ -34,7 +34,7 @@ function help()
 	echo "  -cint			Set change rate to a nondefault value."
 	echo "  			  Set to -1 to disable."
 	echo "  -fint			Fade color changes over a number of frames."
-	echo "  			  Set to 0 to disable."
+	echo "  			  Set to 1 to disable."
 	echo "  -h			Show this help."
 	echo "  -l			Lock the master color."
 	echo " 				  Locking the master color will cause all"
