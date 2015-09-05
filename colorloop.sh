@@ -24,7 +24,7 @@ CHANGERATEFILE=~/projects/colorloop/.change_rate
 # END CONFIGURABLE VARIABLES #
 ##############################
 
-VERSION=1.4
+VERSION=1.5
 
 function help()
 {
@@ -50,10 +50,26 @@ then
 	do
 		case $opt in
 			c)
-				echo "$OPTARG" > "$CHANGERATEFILE"
+				if [ $OPTARG -gt -1 ]
+				then
+					echo "$OPTARG" > "$CHANGERATEFILE"
+				else
+					echo "Insane changerate value: $OPTARG"	>&2
+				fi
 				;;
 			f)
-				echo "$OPTARG" > "$FADETIMEFILE"
+				maxframes=32
+				if [ $OPTARG -gt 0 ]
+				then
+					if [ $OPTARG -lt $(($maxframes+1)) ]
+					then
+						echo "$OPTARG" > "$FADETIMEFILE"
+					else
+						echo "Insane fade time frames: $OPTARG -- consider a value between 1 and $maxframes" >&2
+				fi
+				else
+					echo "Insane fade time frames: $OPTARG -- consider a value between 1 and $maxframes" >&2
+				fi
 				;;
 			h)
 				help
@@ -63,7 +79,14 @@ then
 				touch "$LOCKCOLORFILE"
 				;;
 			s)
-				echo "$OPTARG" > "$CURRENTCOLORFILE"
+				color=$OPTARG
+				IFS=' ' read -a rgb <<< "$color"
+				if [ ${rgb[0]} -gt -1 ] && [ ${rgb[0]} -lt 256 ] && [ ${rgb[1]} -gt -1 ] && [ ${rgb[1]} -lt 256 ] && [ ${rgb[2]} -gt -1 ] && [ ${rgb[2]} -lt 256 ]
+				then
+					echo "$OPTARG" > "$CURRENTCOLORFILE"
+				else
+					echo "Insane color value: $OPTARG" >&2
+				fi
 				;;
 			u)
 				rm -f "$LOCKCOLORFILE"
