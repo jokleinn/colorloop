@@ -12,7 +12,8 @@ MIN=32
 MAX=192
 
 #Background image to load. Must have transparency for color to seep through.
-IMAGE=~/projects/colorloop/boxes.png
+#IMAGE=~/projects/colorloop/boxes.png
+IMAGE=~/projects/colorloop/mosaiccircuit.png
 
 #"Configuration" directory. This will have a small handful of dot files thrown into it.
 CONFDIR=~/projects/colorloop
