@@ -25,12 +25,13 @@ LOCKCOLORFILE=.lock_color
 CURRENTCOLORFILE=.current_color
 FADETIMEFILE=.fade_time
 CHANGERATEFILE=.change_rate
+IMAGEFILE=.current_image
 
 ##############################
 # END CONFIGURABLE VARIABLES #
 ##############################
 
-VERSION=1.7
+VERSION=1.8
 
 function help()
 {
@@ -42,6 +43,7 @@ function help()
 	echo "  -fint			Fade color changes over a number of frames."
 	echo "  			  Set to 1 to disable."
 	echo "  -h			Show this help."
+	echo "  -i\"path\" 		Set the background image." 			
 	echo "  -l			Lock the master color."
 	echo " 				  Locking the master color will cause all"
 	echo " 				  output to be deviations of it."
@@ -52,7 +54,7 @@ function help()
 
 if [ $# -ne 0 ]
 then
-	while getopts :c:f:hls:u opt
+	while getopts :c:f:hi:ls:u opt
 	do
 		case $opt in
 			c)
@@ -80,6 +82,14 @@ then
 			h)
 				help
 				exit
+				;;
+			i)
+				if [ -f $OPTARG ]
+				then
+					echo "$OPTARG" > "$CONFDIR/$IMAGEFILE"
+				else
+					echo "File does not exist: \"$OPTARG\"" >&2
+				fi
 				;;
 			l)
 				touch "$CONFDIR/$LOCKCOLORFILE"
@@ -177,6 +187,12 @@ while true; do
 	red=$(shuf -z -n1 -i$colormin$dash$colormax)
 	green=$(shuf -z -n1 -i$colormin$dash$colormax)
 	blue=$(shuf -z -n1 -i$colormin$dash$colormax)
+
+	if [ -e "$CONFDIR/$IMAGEFILE" ]
+	then
+		IMAGE=$(cat "$CONFDIR/$IMAGEFILE")
+		rm "$CONFDIR/$IMAGEFILE"
+	fi
 
 	if [ -e "$CONFDIR/$CURRENTCOLORFILE" ]
 	then
