@@ -13,7 +13,9 @@ MAX=192
 
 #Background image to load. Must have transparency for color to seep through.
 #IMAGE=~/projects/colorloop/boxes.png
-IMAGE=~/projects/colorloop/mosaiccircuit.png
+#IMAGE=~/projects/colorloop/mosaiccircuit.png
+#IMAGE=~/projects/colorloop/greenishspiral.png
+IMAGE=~/projects/colorloop/linus.png
 
 #"Configuration" directory. This will have a small handful of dot files thrown into it.
 CONFDIR=~/projects/colorloop
@@ -28,7 +30,7 @@ CHANGERATEFILE=.change_rate
 # END CONFIGURABLE VARIABLES #
 ##############################
 
-VERSION=1.6
+VERSION=1.7
 
 function help()
 {
