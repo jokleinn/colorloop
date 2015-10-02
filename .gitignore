@@ -3,4 +3,6 @@
 .fade_time
 .change_rate
 .current_image
+.gradient
+.framelimit
 *.swp
