@@ -209,8 +209,8 @@ function fade()
 		else
 			display $(($oldr + $addr)) $(($oldg + $addg)) $(($oldb + $addb)) $gradient
 		fi
+		sleep $FRAMELIMIT
 	done
-	sleep $FRAMELIMIT
 }
 
 while true; do
