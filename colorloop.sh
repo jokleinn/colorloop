@@ -17,7 +17,8 @@ MAX=224
 #IMAGE=greenishspiral.png
 #IMAGE=linus.png
 #IMAGE=stallman.png
-IMAGE=patio.png
+#IMAGE=patio.png
+IMAGE=gentoo_xfce_xmonad.png
 
 #Directory (under configuration directory) containing images.
 IMAGEDIR=images
