@@ -157,7 +157,7 @@ function display()
 	gradient=$4
 	if [ "$gradient" = "" ] 
 	then
-		gradient=$(shuf -z -n1 -i0-359)
+		gradient=$(shuf -z -n1 -i20-50)
 	fi
 	if [ $GRADIENT -eq 1 ]
 	then
