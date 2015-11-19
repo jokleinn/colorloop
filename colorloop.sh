@@ -18,6 +18,7 @@ MIN=32
 MAX=224
 
 #Background image to load. Must have transparency for color to seep through.
+IMAGE=snowflake.png
 #IMAGE=boxes.png
 #IMAGE=mosaiccircuit.png
 #IMAGE=greenishspiral.png
@@ -25,13 +26,13 @@ MAX=224
 #IMAGE=stallman.png
 #IMAGE=patio.png
 #IMAGE=gentoo_xfce_xmonad.png
-IMAGE=halloween.png
+#IMAGE=halloween.png
 
 #Directory (under configuration directory) containing images.
 IMAGEDIR=images
 
 #"Configuration" directory. This will have a small handful of dot files thrown into it.
-CONFDIR=~/projects/colorloop
+CONFDIR=/mnt/projects/git/colorloop
 
 #Internal file names, this is mostly useful if you want to put temporary files elsewhere.
 LOCKCOLORFILE=.lock_color
@@ -60,7 +61,7 @@ function help()
 	echo "  -Ffloat			Set delay between two frames."
 	echo "  -gint			Set use of gradients."
 	echo "  -h			Show this help."
-	echo "  -i\"filename\" 		Set the background image." 			
+	echo "  -i\"filename\" 		Set the background image."
 	echo "  -l			Lock the master color."
 	echo " 				  Locking the master color will cause all"
 	echo " 				  output to be deviations of it."
@@ -155,9 +156,9 @@ function display()
 	green=$2
 	blue=$3
 	gradient=$4
-	if [ "$gradient" = "" ] 
+	if [ "$gradient" = "" ]
 	then
-		gradient=$(shuf -z -n1 -i20-50)
+		gradient=$(shuf -z -n1 -i20-35)
 	fi
 	if [ $GRADIENT -eq 1 ]
 	then
@@ -233,7 +234,7 @@ while true; do
 		GRADIENT=$(cat "$CONFDIR/$GRADIENTFILE")
 		rm "$CONFDIR/$GRADIENTFILE"
 	fi
-	
+
 	if [ -e "$CONFDIR/$FRAMELIMITFILE" ]
 	then
 		FRAMELIMIT=$(cat "$CONFDIR/$FRAMELIMITFILE")
@@ -250,7 +251,7 @@ while true; do
 	fi
 
 	if [ -e "$CONFDIR/$LOCKCOLORFILE" ]
-	then	
+	then
 		red=${rgb[0]}
 		green=${rgb[1]}
 		blue=${rgb[2]}
@@ -275,7 +276,7 @@ while true; do
 	sleeptime=$CHANGERATE
 	if [ -e "$CONFDIR/$CHANGERATEFILE" ]
 	then
-		filechangerate=$(cat "$CONFDIR/$CHANGERATEFILE")	
+		filechangerate=$(cat "$CONFDIR/$CHANGERATEFILE")
 		if [ $filechangerate -gt -1 ]
 		then
 			sleeptime=$filechangerate
